@@ -1,25 +1,31 @@
 
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Wheel } from 'react-custom-roulette'
 import { WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
 
-const data: Array<WheelData> = [
-  { option: '1', style: { backgroundColor: 'green', textColor: 'black' } },
-  { option: '2', style: { backgroundColor: 'blue ' } },
-  { option: '3', style: { backgroundColor: 'red' } },
-  { option: '4', style: { backgroundColor: 'yellow', textColor: 'black' } },
-  { option: '5', style: { backgroundColor: 'brown' } },
-]
+const randomColor = () => '#' + Math.floor(Math.random() * 16777215).toString(16);
 
-const Roulette: FC<{ prizeNumber: number, mustStartSpinning: boolean }> = ({ prizeNumber, mustStartSpinning } ) => {
+interface Props {
+  prizes: Array<number>,
+  prizeNumber: number,
+  mustStartSpinning: boolean,
+  onStopSpinning: (() => any)
+}
+const Roulette: FC<Props> = ({ prizes, prizeNumber, mustStartSpinning, onStopSpinning }) => {
+  const data = prizes.map((prize) => {
+    return {
+      option: prize.toString(),
+    };
+  });
 
   return (
     <div>
       <Wheel
         mustStartSpinning={mustStartSpinning}
         prizeNumber={prizeNumber}
+        onStopSpinning={onStopSpinning}
         data={data}
-        backgroundColors={['#3e3e3e', '#df3428']}
+        backgroundColors={['#3e3e3e', '#df3428', '#ac812b', '#931f6c', '#dba050']}
         textColors={['#ffffff']}
       />
     </div>
